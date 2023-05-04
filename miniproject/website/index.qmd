@@ -1,0 +1,26 @@
+---
+title: "website"
+toc: false
+---
+
+# Start with some text
+
+
+# Add the networks
+```{=html}
+<div class="iframes-container">
+
+    <iframe allowtransparency="true" style="background: #272838;" src="./viz/textnet_qualifications.html" frameborder="0" width="815" height="815" ></iframe>
+
+</div>
+```
+
+text here
+
+```{=html }
+<div class="iframes-container">
+
+    <iframe allowtransparency="true" style="background: #272838;" src="./viz/textnet_qualifications.html" frameborder="0" width="815" height="815" ></iframe>
+
+</div>
+```
