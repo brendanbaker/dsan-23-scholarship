@@ -1,11 +1,12 @@
 ---
-title: ""
+title: "What does the job market for data science graduates *look* like?"
 toc: true
 toc-title: "Skip to..."
+toc-depth: 2
 navbar: false
 ---
 
-# What does the job market for data science graduates *look* like?
+## Introduction
 
 The present state of the economy (as of May 2023) is uncertain at best, with some bearish voices warning of recession while others claim it's business as usual.  A recent [Forbes advisor article](https://www.forbes.com/advisor/investing/are-we-in-a-recession/) tracked 15 performance metrics and rated 3 as good, 4 as neutral, and 8 as bad.  Two consumer confidence surveys were listed - one rated good, the other rated bad.  A recent [nerdwallet](https://www.nerdwallet.com/article/finance/are-we-in-a-recession) article dated May 3rd plainly states "According to a traditional definition, the U.S. is not currently in a recession."  
 
@@ -29,21 +30,28 @@ The searches were also divided into two categories based on their location: nati
 
 ![An example job posting.](./pics/jobposting.png)
 
+There were a total of 823 unique job postings.  From these postings, there were 458 unique job titles, which leads me to my first question. 
+
 ## Untangling the web of job titles 
 
+Given the vast number of job titles - and 11 different search categories - I wondered which jobs I might qualify for with my degree.  I've often heard that data science graduates are prepared for a wide variety of jobs, and not to limit oneself only to jobs entitled "Data Scientist".  To this end, I focused on the "Qualifications" and "Responsibilities" sections of a the job posting.  I used a community detection algorithm, combined with some network visualization tools, to determine whether the words used to describe these positions are really as different as the titles might indicate. 
 
 
-
+### A network of qualifications ... 
 ```{=html}
 <div class="iframes-container">
-
     <iframe allowtransparency="true" style="background: #272838;" src="./viz/textnet_qualifications.html" frameborder="0" width="815" height="815" ></iframe>
-
 </div>
 ```
+<font size='2'><center>*Note that you can click on the shapes to highlight its connections, then move and zoom the chart as needed for clarity.  Squares represent search terms, while circles represent noun phrases associated with that search term.*</center></font>
 
-text here
+Depending on the algorithm I used, I found anywhere between 1 and 3 distinct groups of qualifications amongst the search terms.  In this final iteration, we can see that there are three communities of listed qualifications.  
+ 
+ * **Yellow Group -** *Math and Statistics:*  Primary qualifications explicitly reference math and statistics, as well as regression and R, our favorite statistical programming language.  These are deep learning, time series, and reinforcement learning jobs.  
+ * **Red Group -** *High Experience:*  These jobs reference experience, skills, 'a related field', and a master's degree.  These are more specialized machine learning, natural language processing (NLP), and block chain jobs. 
+ * **Purple Group -** *Computer Science Heavy:*
 
+### ... and a network of responsibilities
 ```{=html }
 <div class="iframes-container">
 
@@ -51,3 +59,7 @@ text here
 
 </div>
 ```
+
+
+
+Overall, there was heavy overlap for each category when looking at the associations of each qualification and responsibility.  The answer to the question "Are the qualifications and responsibilities for these jobs very different?" is: *probably not.*

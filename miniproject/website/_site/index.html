@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Jobs -</title>
+<title>Jobs - What does the job market for data science graduates look like?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,21 +74,33 @@ ul.task-list li input[type="checkbox"] {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Skip to…</h2>
    
-  <ul>
-  <li><a href="#what-does-the-job-market-for-data-science-graduates-look-like" id="toc-what-does-the-job-market-for-data-science-graduates-look-like" class="nav-link active" data-scroll-target="#what-does-the-job-market-for-data-science-graduates-look-like">What does the job market for data science graduates <em>look</em> like?</a>
   <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#untangling-the-web-of-job-titles" id="toc-untangling-the-web-of-job-titles" class="nav-link" data-scroll-target="#untangling-the-web-of-job-titles">Untangling the web of job titles</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">What does the job market for data science graduates <em>look</em> like?</h1>
+</div>
 
 
-<section id="what-does-the-job-market-for-data-science-graduates-look-like" class="level1">
-<h1>What does the job market for data science graduates <em>look</em> like?</h1>
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>The present state of the economy (as of May 2023) is uncertain at best, with some bearish voices warning of recession while others claim it’s business as usual. A recent <a href="https://www.forbes.com/advisor/investing/are-we-in-a-recession/">Forbes advisor article</a> tracked 15 performance metrics and rated 3 as good, 4 as neutral, and 8 as bad. Two consumer confidence surveys were listed - one rated good, the other rated bad. A recent <a href="https://www.nerdwallet.com/article/finance/are-we-in-a-recession">nerdwallet</a> article dated May 3rd plainly states “According to a traditional definition, the U.S. is not currently in a recession.”</p>
 <p>While I am not an economist, I am interested in understanding the current state of job market for data scientists, since I will need to find a job after I graduate. Before breaking out the machine learning algorithms to try and predict where the economy is going (maybe later!), I think using the data provided for our vizualization mini-project might give us a sense of how the data science market looks like right now. At the very least, I hope to answer a few questions that I’ve had when trying to navigate job postings.</p>
 <p>The data provided for this mini-project comes from a web-crawling exercise that involved 11 different search terms on April 14th, 2023. These search terms were:</p>
@@ -111,19 +123,37 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figcaption class="figure-caption">An example job posting.</figcaption><p></p>
 </figure>
 </div>
+<p>There were a total of 823 unique job postings. From these postings, there were 458 unique job titles, which leads me to my first question.</p>
+</section>
 <section id="untangling-the-web-of-job-titles" class="level2">
 <h2 class="anchored" data-anchor-id="untangling-the-web-of-job-titles">Untangling the web of job titles</h2>
+<p>Given the vast number of job titles - and 11 different search categories - I wondered which jobs I might qualify for with my degree. I’ve often heard that data science graduates are prepared for a wide variety of jobs, and not to limit oneself only to jobs entitled “Data Scientist”. To this end, I focused on the “Qualifications” and “Responsibilities” sections of a the job posting. I used a community detection algorithm, combined with some network visualization tools, to determine whether the words used to describe these positions are really as different as the titles might indicate.</p>
+<section id="a-network-of-qualifications" class="level3">
+<h3 class="anchored" data-anchor-id="a-network-of-qualifications">A network of qualifications …</h3>
+<div class="iframes-container">
+    <iframe allowtransparency="true" style="background: #272838;" src="./viz/textnet_qualifications.html" frameborder="0" width="815" height="815"></iframe>
+</div>
+<font size="2">
+<center>
+<em>Note that you can click on the shapes to highlight its connections, then move and zoom the chart as needed for clarity. Squares represent search terms, while circles represent noun phrases associated with that search term.</em>
+</center>
+</font><p><font size="2"></font></p>
+<p>Depending on the algorithm I used, I found anywhere between 1 and 3 distinct groups of qualifications amongst the search terms. In this final iteration, we can see that there are three communities of listed qualifications.</p>
+<ul>
+<li><strong>Yellow Group -</strong> <em>Math and Statistics:</em> Primary qualifications explicitly reference math and statistics, as well as regression and R, our favorite statistical programming language. These are deep learning, time series, and reinforcement learning jobs.<br>
+</li>
+<li><strong>Red Group -</strong> <em>High Experience:</em> These jobs reference experience, skills, ‘a related field’, and a master’s degree. These are more specialized machine learning, natural language processing (NLP), and block chain jobs.</li>
+<li><strong>Purple Group -</strong> <em>Computer Science Heavy:</em></li>
+</ul>
+</section>
+<section id="and-a-network-of-responsibilities" class="level3">
+<h3 class="anchored" data-anchor-id="and-a-network-of-responsibilities">… and a network of responsibilities</h3>
 <div class="iframes-container">
 
     <iframe allowtransparency="true" style="background: #272838;" src="./viz/textnet_qualifications.html" frameborder="0" width="815" height="815"></iframe>
 
 </div>
-<p>text here</p>
-<div class="iframes-container">
-
-    <iframe allowtransparency="true" style="background: #272838;" src="./viz/textnet_qualifications.html" frameborder="0" width="815" height="815"></iframe>
-
-</div>
+<p>Overall, there was heavy overlap for each category when looking at the associations of each qualification and responsibility. The answer to the question “Are the qualifications and responsibilities for these jobs very different?” is: <em>probably not.</em></p>
 
 
 </section>
