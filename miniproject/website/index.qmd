@@ -1,12 +1,39 @@
 ---
-title: "website"
-toc: false
+title: ""
+toc: true
+toc-title: "Skip to..."
+navbar: false
 ---
 
-# Start with some text
+# What does the job market for data science graduates *look* like?
+
+The present state of the economy (as of May 2023) is uncertain at best, with some bearish voices warning of recession while others claim it's business as usual.  A recent [Forbes advisor article](https://www.forbes.com/advisor/investing/are-we-in-a-recession/) tracked 15 performance metrics and rated 3 as good, 4 as neutral, and 8 as bad.  Two consumer confidence surveys were listed - one rated good, the other rated bad.  A recent [nerdwallet](https://www.nerdwallet.com/article/finance/are-we-in-a-recession) article dated May 3rd plainly states "According to a traditional definition, the U.S. is not currently in a recession."  
+
+While I am not an economist, I am interested in understanding the current state of job market for data scientists, since I will need to find a job after I graduate.  Before breaking out the machine learning algorithms to try and predict where the economy is going (maybe later!), I think using the data provided for our vizualization mini-project might give us a sense of how the data science market looks like right now.  At the very least, I hope to answer a few questions that I've had when trying to navigate job postings.  
+
+The data provided for this mini-project comes from a web-crawling exercise that involved 11 different search terms on April 14th, 2023.  These search terms were:
+
+ * `data scientist`
+ * `data analyst`
+ * `neural networks`
+ * `big data and cloud computing`
+ * `machine learning`
+ * `reinforcement learning`
+ * `deep learning`
+ * `time series`
+ * `block chain`
+ * `natural language processing`
+
+The searches were also divided into two categories based on their location: nationwide, and here in Washington, D.C.  You can see a sample job posting below:
+  
+
+![An example job posting.](./pics/jobposting.png)
+
+## Untangling the web of job titles 
 
 
-# Add the networks
+
+
 ```{=html}
 <div class="iframes-container">
 

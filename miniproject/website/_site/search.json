@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "website",
+    "title": "Jobs",
     "section": "",
-    "text": "Add the networks\n\n\n    \n\n\ntext here"
+    "text": "The present state of the economy (as of May 2023) is uncertain at best, with some bearish voices warning of recession while others claim it’s business as usual. A recent Forbes advisor article tracked 15 performance metrics and rated 3 as good, 4 as neutral, and 8 as bad. Two consumer confidence surveys were listed - one rated good, the other rated bad. A recent nerdwallet article dated May 3rd plainly states “According to a traditional definition, the U.S. is not currently in a recession.”\nWhile I am not an economist, I am interested in understanding the current state of job market for data scientists, since I will need to find a job after I graduate. Before breaking out the machine learning algorithms to try and predict where the economy is going (maybe later!), I think using the data provided for our vizualization mini-project might give us a sense of how the data science market looks like right now. At the very least, I hope to answer a few questions that I’ve had when trying to navigate job postings.\nThe data provided for this mini-project comes from a web-crawling exercise that involved 11 different search terms on April 14th, 2023. These search terms were:\n\ndata scientist\ndata analyst\nneural networks\nbig data and cloud computing\nmachine learning\nreinforcement learning\ndeep learning\ntime series\nblock chain\nnatural language processing\n\nThe searches were also divided into two categories based on their location: nationwide, and here in Washington, D.C. You can see a sample job posting below:\n\n\n\nAn example job posting.\n\n\n\n\n\n\n    \n\n\ntext here"
   },
   {
     "objectID": "about.html",

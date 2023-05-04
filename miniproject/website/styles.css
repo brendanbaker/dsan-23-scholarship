@@ -190,5 +190,20 @@
       }
 
     
+
+      .sidebar nav[role=doc-toc] ul>li>a.active {
+        border-left: 1px solid #EFB988;
+        color: #EFB988 !important;
+    }
+
+    .sidebar nav[role=doc-toc] ul>li>ul>li>a.active {
+        border-left: 1px solid #EFB988;
+        color: #EFB988 !important;
+    }
+
+      .nav-link :active {
+        color: #F3DE8A;
+      }
+      
       
   
