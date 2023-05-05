@@ -4,9 +4,12 @@ toc: true
 toc-title: "Skip to..."
 toc-depth: 2
 navbar: false
+echo: false
+results: asis
+embed-resources: false
 ---
 
-## Introduction
+## 🤝 Introduction
 
 The present state of the economy (as of May 2023) is uncertain at best, with some bearish voices warning of recession while others claim it's business as usual.  A recent [Forbes advisor article](https://www.forbes.com/advisor/investing/are-we-in-a-recession/) tracked 15 performance metrics and rated 3 as good, 4 as neutral, and 8 as bad.  Two consumer confidence surveys were listed - one rated good, the other rated bad.  A recent [nerdwallet](https://www.nerdwallet.com/article/finance/are-we-in-a-recession) article dated May 3rd plainly states "According to a traditional definition, the U.S. is not currently in a recession."  
 
@@ -29,11 +32,11 @@ The searches were also divided into two categories based on their location: nati
   
 
 ![An example job posting.](./pics/jobposting.png)
-<font size='2'><center>*An example job posting.  Many postings list abundant qualifications, responsibilities, and benefits.*</center></font>
+<font size='2'><center>*Screenshot of an example job posting.  Many postings list abundant qualifications, responsibilities, and benefits.*</center></font>
  
 There were a total of 823 unique job postings.  From these postings, there were 458 unique job titles, which leads me to my first question. 
 
-## Untangling the web of job titles 
+## 🕸️ Untangling The Web of Job Titles
 
 Given the vast number of job titles - and 11 different search categories - I wondered which jobs I might qualify for with my degree.  I've often heard that data science graduates are prepared for a wide variety of jobs, and not to limit oneself only to jobs entitled "Data Scientist".  To this end, I focused on the "Qualifications" and "Responsibilities" sections of a the job posting.  I used a community detection algorithm, combined with some network visualization tools, to determine whether the words used to describe these positions are really as different as the titles might indicate. 
 
@@ -62,6 +65,7 @@ If you click on the nodes (circles/squares) of the network, you can see that eve
 
 </div>
 ```
+<br>
 <font size='2'><center>*We can see that the responsibilities listed in the job postings also form 3 similar groups.*</center></font>
 
 Turning out attention to the responsibilities listed in the job postings, we once again are left with three groups using this specific algorithm (for anyone familiar with network science, it is a Reichardt and Bornholdt’s Potts model).
@@ -72,4 +76,259 @@ My impression of these groups is as follows:
  * **Red Group -** *Technical-Managerial:*  Responsiblities that focus on training, management, and providing technical expertise.  These jobs include Big Data and Cloud Computing, Block Chain, and more advanced Reinforcement Learning.  
  * **Purple Group -** *Collaborative Development:*  This group references more 'soft skills' such as collaboration, development, and design.  While these are still very technical positions such as Neural Networks and NLP, it often takes a big team to build these models!
 
-Overall, there was heavy overlap for each qualifications and responsibilities associated with each search term.  The answer to the question "Are the qualifications and responsibilities for these jobs very different?" is: *probably not.*
+Overall, there is heavy overlap for the qualifications and responsibilities associated with each search term.  The answer to the question "Are the qualifications and responsibilities for these jobs very different?" is: *probably not.*  Fortunately, it looks like our program prepares us very well for the majority of these positions.
+
+## 🦸‍♂️ Great Responsibilities, Great Benefits?
+
+The language in which a job opportunity is packaged varies greatly from company to company.  Some postings are described extensively, while other simply list a few meagre bullet points.  The extent to which the amount of qualifications, responsibilities, and benefits reflect the true nature of a position is unclear.  However, as a prospective applicant, my intuition would be that a job with more listed qualifications and responsibilities should also have more benefits.  At the very least, one would expect companies that are more verbose in their recruitment would have more bullet points in each category: qualifications, responsibilities, and benefits.
+
+To answer this question, I tallied the number of bullet points in each category for all of the positions that listed values for all three:
+
+```{python}
+#| column: screen
+import plotly.graph_objects as go
+import plotly.express as px
+import pandas as pd
+import math
+
+agg_sub = pd.read_csv('./data/bubbleplot_data.csv')
+
+color_map = {
+    'block chain': '#434A54',
+    'natural language processing': '#8D8361',
+    'big data and cloud computing': "#F3DE8A",
+    'machine learning': "#EFB988",
+    'reinforcement learning': '#EB9486',
+    'neural networks': '#B58A90',
+    'deep learning': '#9A8595',
+    'data scientist': '#7E7F9A',
+    'time series analysis': '#BCBCC9',
+    'time series': '#BCBCC9',
+    'data analyst': '#F9F8F8',
+}
+
+# Reference for bubble size
+size_ref = 2*max(agg_sub['num_benefits'])/(65**2)
+
+# Create the viz lists
+# 1 value true for all 11 categories
+viz_lists = [[True if i == j else False for i in range(11)]for j in range(10)] 
+
+# Initialize the figure
+fig = go.Figure()
+
+# Loop through each search term
+for i, topic in enumerate(agg_sub['category'].unique()):
+    # Filter the dataframe by household
+    topic_df = agg_sub[agg_sub['category'] == topic]
+    
+    # Create the customdata for the hover text
+    customdata = topic_df[['title', 'company_name', 'location','category', 'num_qualifications', 'num_responsibilities', 'num_benefits']]
+    
+    fig.add_trace(
+        go.Scatter(
+            x=topic_df['num_qualifications'],
+            y=topic_df['num_responsibilities'],
+            customdata=customdata,
+            hovertemplate = '<b>%{customdata[0]}</b><br>Company: %{customdata[1]}<br>Location: %{customdata[2]}<br>Search term: %{customdata[3]}<extra></extra><br><br>Number of benefits: %{customdata[6]}',
+            name=topic,
+            mode = 'markers',
+            marker_size = topic_df['num_benefits'],
+            marker = dict(color = color_map[topic], sizemode = 'area', sizeref=size_ref, 
+                           line_width=2, line_color='darkgrey')
+        )
+    )
+
+# Full custom hovertemplate:
+#'<b>%{customdata[0]}</b><br>Company: %{customdata[1]}<br>Location: %{customdata[2]}<br>Search term: %{customdata[3]}<extra></extra><br>Number of qualifications: %{customdata[4]}<br>Number of responsibilities: %{customdata[5]}<br>Number of benefits: %{customdata[6]}
+
+
+fig.update_layout(
+    title='Number of Listed Qualifications, Responsibilities, and Benefits',
+    xaxis=dict(
+        title='Number of Listed Qualifications',
+        gridcolor='white',
+        gridwidth=2,
+    ),
+    yaxis=dict(
+        title='Number of Listed Responsibilities',
+        gridcolor='#272838',
+        gridwidth=2,
+    ),
+    paper_bgcolor='#272838',
+    plot_bgcolor='#272838',
+    legend_title_text = 'Job Search Term',
+    font=dict(size=16),
+    height = 550
+)
+
+
+# Add a dropdown menu to filter by appliance
+fig.update_layout(
+    updatemenus=[
+        go.layout.Updatemenu(
+            type='dropdown',
+            showactive=True,
+            buttons=[
+                {'label': 'All Search Terms', 'method': 'update', 'args': [{'visible': True},                                             {"title": "Number of Listed Qualifications, Responsibilities, and Benefits"},]},
+                {'label': 'Blockchain', 'method': 'update', 'args': [{'visible': viz_lists[0]},{"title": "Number of Listed Qualifications, Responsibilities, and Benefits in Job Posting for Careers in Blockchain"}, ]},
+                {'label': 'NLP', 'method': 'update', 'args': [{'visible': viz_lists[1]}, {"title": "Number of Listed Qualifications, Responsibilities, and Benefits in Job Posting for Careers in NLP"},]},
+                {'label': 'Big Data', 'method': 'update', 'args': [{'visible': viz_lists[2]}, {"title": "Number of Listed Qualifications, Responsibilities, and Benefits in Job Posting for Careers in Big Data"},]},
+                {'label': 'Data Analyst', 'method': 'update', 'args': [{'visible': viz_lists[3]}, {"title": "Number of Listed Qualifications, Responsibilities, and Benefits in Job Posting for Careers in Data Analysis"},]},
+                {'label': 'Machine Learning', 'method': 'update', 'args': [{'visible': viz_lists[4]}, {"title": "Number of Listed Qualifications, Responsibilities, and Benefits in Job Posting for Careers in Machine Learning"},]},
+                {'label': 'Reinforcement Learning', 'method': 'update', 'args': [{'visible': viz_lists[5]}, {"title": "Number of Listed Qualifications, Responsibilities, and Benefits in Job Posting for Careers in Reinforcement Learning"},]},
+                {'label': 'Neural Networks', 'method': 'update', 'args': [{'visible': viz_lists[6]}, {"title": "Number of Listed Qualifications, Responsibilities, and Benefits in Job Posting for Careers in Neural Networks"},]},
+                {'label': 'Deep Learning', 'method': 'update', 'args': [{'visible': viz_lists[7]}, {"title": "Number of Listed Qualifications, Responsibilities, and Benefits in Job Posting for Careers in Deep Learning"},]},
+                {'label': 'Data Scientist', 'method': 'update', 'args': [{'visible': viz_lists[8]}, {"title": "Number of Listed Qualifications, Responsibilities, and Benefits in Job Posting for Careers in Data Science"},]},
+                {'label': 'Time Series', 'method': 'update', 'args': [{'visible': viz_lists[9]}, {"title": "Number of Listed Qualifications, Responsibilities, and Benefits in Job Posting for Careers in Time Series"},]}
+            ],
+        x = -0.005,
+        xanchor = 'left',
+        y = 1.12,
+        yanchor = 'top',
+        )
+    ]
+)
+
+# Find the maximum and minimum values of num_qualifications and num_responsibilities
+x_range = [agg_sub['num_qualifications'].min(), agg_sub['num_qualifications'].max()]
+y_range = [agg_sub['num_responsibilities'].min(), agg_sub['num_responsibilities'].max()]
+
+# Set the same x and y range for every trace
+fig.update_layout(xaxis=dict(range=[-0,30]), yaxis=dict(range=[-2,42]))
+
+fig.update_layout(legend= {'itemsizing': 'constant'})
+fig.update_layout(font=dict(color='white'))
+fig.update_layout(xaxis=dict(showgrid=False))
+fig.update_layout(yaxis=dict(showgrid=False))
+fig.show()
+```
+<font size='2'><center>*In this plot, the size of the bubble is scaled to the number of listed responsibilities.  The position on the bottom (x) axis reflects the number of qualifications listed on the job posting, while the position on the left (y) axis marks the number of listed responsibilities.  Use the dropdown menu on the top left to filter by the type of job, and mouse over a bubble to reveal more information about that position!*</center></font>
+
+In many cases, there doesn't appear to be much of a relationship between the number of listed responsibilities, qualifications, and benefits.  I admit that this is not the most rigorous way to analyze whether what employers desire in candidates is commensurate with their benefits, however this may pose a perceptual problem for employers who are trying to attract talent.  For example, a prospective applicant might look at a job posting with 40 listed responsibilities and only 2 benefits - as one company did - and immediately decide not to apply to that position. 
+
+```{python}
+# Load the data
+agg_sub = pd.read_csv('./data/bubbleplot_data.csv')
+
+job_types = agg_sub['category'].unique()
+
+# Initialize the figure
+fig = go.Figure()
+
+# Calculate the overall correlation matrix for all job types
+overall_corr_matrix = agg_sub[['num_qualifications', 'num_responsibilities', 'num_benefits']].corr().round(2)
+
+# Add the overall correlation matrix as the first trace
+fig.add_trace(go.Heatmap(
+    z=overall_corr_matrix.values,
+    x=['Qualifications', 'Responsibilities', 'Benefits'],
+    y=['Qualifications', 'Responsibilities', 'Benefits'],
+    text=overall_corr_matrix.values,
+    texttemplate='%{text}',
+    textfont=dict(color='black'),
+    colorscale='Plasma',
+    zmin=-1,
+    zmax=1,
+    hovertemplate='%{x} and %{y}<br>Correlation: %{z}<extra></extra>',
+    visible=True,
+    name='All Job Types'
+))
+
+
+# Create a heatmap for each job type
+for job_type in job_types:
+    filtered_data = agg_sub[agg_sub['category'] == job_type]
+    corr_matrix = filtered_data[['num_qualifications', 'num_responsibilities', 'num_benefits']].corr().round(2)
+    fig.add_trace(go.Heatmap(
+        z=corr_matrix.values,
+        x=['Qualifications', 'Responsibilities', 'Benefits'],
+        y=['Qualifications', 'Responsibilities', 'Benefits'],
+        text=corr_matrix.values,
+        texttemplate='%{text}',
+        textfont=dict(color='black'),
+        colorscale='Plasma',
+        zmin=-1,
+        zmax=1,
+        hovertemplate='%{x} and %{y}<br>Correlation: %{z}<extra></extra>',
+        visible=False,
+        name=job_type
+    ))
+
+fig.update_layout(
+    title='Correlation Matrix of Responsibilities, Qualifications, and Benefits',
+    xaxis=dict(
+        title='',
+        gridcolor='white',
+        gridwidth=2,
+    ),
+    yaxis=dict(
+        title='',
+        gridcolor='#272838',
+        gridwidth=2,
+    ),
+    paper_bgcolor='#272838',
+    plot_bgcolor='#272838',
+    font=dict(size=16),
+    height=550
+)
+
+# Generate the dropdown buttons
+# Generate the dropdown buttons
+dropdown_buttons = [
+    {
+        'label': 'All Job Types',
+        'method': 'update',
+        'args': [
+            {'visible': [True if i == 0 else False for i in range(len(job_types) + 1)]},  # Show only the first trace (overall correlation matrix)
+            {'title': 'Correlation Matrix of Responsibilities, Qualifications, and Benefits'}
+        ]
+    }
+]
+
+for i, job_type in enumerate(job_types):
+    capitalized_job_type = job_type.title()  # Capitalize the first letter of each word
+    visible_list = [False] * (len(job_types) + 1)
+    visible_list[i + 1] = True  # Adjust the index to account for the added trace
+    dropdown_buttons.append(
+        {
+            'label': capitalized_job_type,
+            'method': 'update',
+            'args': [
+                {'visible': visible_list},
+                {'title': f'Correlation Matrix for {capitalized_job_type} Careers'}
+            ]
+        }
+    )
+
+fig.update_layout(
+    updatemenus=[
+        go.layout.Updatemenu(
+            type='dropdown',
+            showactive=True,
+            buttons=dropdown_buttons,
+            x=-0.23,
+            xanchor='left',
+            y=1.12,
+            yanchor='top',
+        )
+    ]
+)
+
+fig.update_layout(font=dict(color='white'))
+fig.update_layout(xaxis=dict(showgrid=False))
+fig.update_layout(yaxis=dict(showgrid=False))
+fig.show()
+```
+<font size='2'><center>*A correlation matrix between the number of qualifications, responsibilities, and benefits.*</center></font>
+
+
+Looking at the correlations between the three variables, we can see that the relationship differs by the job type.  NLP jobs stand out with a solid 0.47 correlation between the number of listed benefits and qualifications.  All other correlations are around the 0 to 0.3 range, except for time series which is misleading due to its sample size of 2.  
+
+Out of the 823 job postings in our dataset, only 464 of them listed their benefits up front.  In general, the number of listed requirements for a position are not matched by the number of benefits offered.  The amount of information provided for each category should be considered by both employers and job applicants to better set expectations, facilitate greater transparency, and improve the hiring process for both parties.  
+
+## 🗺️ Mapping Salaries 
+
+Continuing with our theme of transparency, I imagine much consideration goes into whether a salary should be listed on a posting.  According to [LinkedIn](https://www.linkedin.com/business/talent/blog/talent-acquisition/why-you-should-include-salary-ranges-in-job-posts#:~:text=New%20research%20shows%20what%20many,affect%20their%20decision%20to%20apply.), 91% of job seekers said seeing a salary range on a job posting affects their decision to apply for a job.  In our sample, only 133 postings listed a salary range - only about 15%. 
+
+All of the remote jobs were placed near Toronto, Canada, ranked as [one of the best places to be a remote worker](https://www.forbes.com/sites/jackkelly/2021/10/07/the-100-best-destinations-for-remote-workers-around-the-world/?sh=5a986bbcffbc). 
