@@ -29,7 +29,8 @@ The searches were also divided into two categories based on their location: nati
   
 
 ![An example job posting.](./pics/jobposting.png)
-
+<font size='2'><center>*An example job posting.  Many postings list abundant qualifications, responsibilities, and benefits.*</center></font>
+ 
 There were a total of 823 unique job postings.  From these postings, there were 458 unique job titles, which leads me to my first question. 
 
 ## Untangling the web of job titles 
@@ -49,17 +50,26 @@ Depending on the algorithm I used, I found anywhere between 1 and 3 distinct gro
  
  * **Yellow Group -** *Math and Statistics:*  Primary qualifications explicitly reference math and statistics, as well as regression and R, our favorite statistical programming language.  These are deep learning, time series, and reinforcement learning jobs.  
  * **Red Group -** *High Experience:*  These jobs reference experience, skills, 'a related field', and a master's degree.  These are more specialized machine learning, natural language processing (NLP), and block chain jobs. 
- * **Purple Group -** *Computer Science Heavy:*
+ * **Purple Group -** *Computer Science Heavy:*  References more software-focused programming languages such as C++, Java, and Scala.  These are the big data and neural networks jobs.
+
+If you click on the nodes (circles/squares) of the network, you can see that even though these groups are formed, there is a lot of overlap in the qualifications.  The main qualifications that are not covered in out program are the more software-oriented programming languages such as C++, Java, and Scala. 
 
 ### ... and a network of responsibilities
 ```{=html }
 <div class="iframes-container">
 
-    <iframe allowtransparency="true" style="background: #272838;" src="./viz/textnet_qualifications.html" frameborder="0" width="815" height="815" ></iframe>
+    <iframe allowtransparency="true" style="background: #272838;" src="./viz/textnet_responsibilities.html" frameborder="0" width="815" height="815" ></iframe>
 
 </div>
 ```
+<font size='2'><center>*We can see that the responsibilities listed in the job postings also form 3 similar groups.*</center></font>
 
+Turning out attention to the responsibilities listed in the job postings, we once again are left with three groups using this specific algorithm (for anyone familiar with network science, it is a Reichardt and Bornholdt’s Potts model).
 
+My impression of these groups is as follows: 
 
-Overall, there was heavy overlap for each category when looking at the associations of each qualification and responsibility.  The answer to the question "Are the qualifications and responsibilities for these jobs very different?" is: *probably not.*
+ * **Yellow Group -** *Client-Facing ML:*  Responsiblities include creating Machine Learning (ML) models, with an emphasis on providing value to customers.  These are Deep Learning, Data Science, and Machine Learning jobs.  
+ * **Red Group -** *Technical-Managerial:*  Responsiblities that focus on training, management, and providing technical expertise.  These jobs include Big Data and Cloud Computing, Block Chain, and more advanced Reinforcement Learning.  
+ * **Purple Group -** *Collaborative Development:*  This group references more 'soft skills' such as collaboration, development, and design.  While these are still very technical positions such as Neural Networks and NLP, it often takes a big team to build these models!
+
+Overall, there was heavy overlap for each qualifications and responsibilities associated with each search term.  The answer to the question "Are the qualifications and responsibilities for these jobs very different?" is: *probably not.*
