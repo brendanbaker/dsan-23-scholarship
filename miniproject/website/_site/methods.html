@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Jobs - Methodology and Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Skip to…</h2>
+   
+  <ul class="collapse">
+  <li><a href="#network-analysis" id="toc-network-analysis" class="nav-link active" data-scroll-target="#network-analysis">Network Analysis</a></li>
+  <li><a href="#qualifications-responsibilities-and-benefits" id="toc-qualifications-responsibilities-and-benefits" class="nav-link" data-scroll-target="#qualifications-responsibilities-and-benefits">Qualifications, Responsibilities, and Benefits</a></li>
+  <li><a href="#map" id="toc-map" class="nav-link" data-scroll-target="#map">Map</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Methodology and Notes</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p><a href="index.html">Take me back to the report!</a></p>
+<p>On this page, I briefly summarize some of the techniques used to generate the visualizations in the report. All code will be linked on my github after the project is de-anonymized.</p>
+<section id="network-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="network-analysis">Network Analysis</h2>
+<p><strong>Section name:</strong> “Untangling The Web of Job Titles”</p>
+<p>These network visualizations were generated using a combination of the <a href="https://textnets.readthedocs.io/en/stable/index.html" target="_blank">textnets</a> and <a href="https://pyviz.org/" target="_blank">pyviz</a> packages. Creating the network visualization required a few steps:</p>
+<ol type="1">
+<li><strong>Text preparation:</strong> The text data is cleaned by removing stop words, tokenizing to noun phrases, and calculating the term frequency - inverse document frequency (TF-IDF). TF-IDF is a technique used for determining important words in a document. The noun phrases are filtered based on their TF-IDF score.</li>
+<li><strong>Network building:</strong> The documents and noun phrases are plotted as nodes, with the documents (search terms) represented as squares, and the noun phrases represented as circles. An edge (line) is drawn between nodes that co-occur.<br>
+</li>
+<li><strong>Community detection:</strong> The nodes are colored by their community. Community detection was completed using a <a href="https://leidenalg.readthedocs.io/en/stable/reference.html#rbconfigurationvertexpartition" target="_blank">Reichardt and Bornholdt’s Potts model</a>. My understanding is that this model was appropriate because is flexible and allows for <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.74.016110" target="_blank">overlapping communities</a>.</li>
+</ol>
+</section>
+<section id="qualifications-responsibilities-and-benefits" class="level2">
+<h2 class="anchored" data-anchor-id="qualifications-responsibilities-and-benefits">Qualifications, Responsibilities, and Benefits</h2>
+<p><strong>Section name:</strong> “Great Responsibilities, Great Benefits?”</p>
+<p>The data for the visualizations in this section was generated by counting the number of bullet points for each category listed in the job posting. The colors of the bubble represent the search term, while the area of the circle is scaled to the number of benefits listed. The values in the correlation matrix are simply Pearson’s correlation coefficients. Both plots were primarily generated using the <a href="https://plotly.com/python/" target="_blank">plotly</a> package in python.</p>
+</section>
+<section id="map" class="level2">
+<h2 class="anchored" data-anchor-id="map">Map</h2>
+<p><strong>Section name:</strong> “Mapping Salaries”</p>
+<p>Since the data were quite messy, a number of visualization choices needed to be made. Here are the main decisions:</p>
+<ul>
+<li><strong>Finding locations and adding noise:</strong> Jobs were either remote (listed as “anywhere” or “united states”), or they were listed at a location in <em>city, state abbreviation</em> format.
+<ul>
+<li><strong>For remote jobs,</strong> coordinates were randomly assigned to a location in the continental US. A bounding box was created in GeoJSON for this purpose. Most of the remote jobs will appear in the central US, since drawing a bigger box often led to some jobs being located in the ocean. To avoid any confusion, the remote jobs are not displayed by default, so the user must click on the “remote” box to show those jobs.</li>
+<li><strong>For in-person jobs,</strong> the coordinates were located using the <a href="https://nominatim.org/" target="_blank">nominatim</a> API. Since a number of jobs were listed in the same city, I needed to add a small amount of noise to the coordinates to avoid overlap (about a tenth of a degree).</li>
+</ul></li>
+<li><strong>Yearly/Hourly:</strong> Some positions were listed as hourly wage jobs. These were converted into yearly salaries by multiplying the wage by 2,080, which is the approximate number of hours worked in a year for a full-time employee. This way, the jobs could be compared on the same scale.</li>
+<li><strong>Markers:</strong> The green markers were scaled to 1/5000 of the actual salary. The concentric circles were used to show a minimum and a maximum salary range. A popup was generated to provide more information about the position.</li>
+<li><strong>The map:</strong> The map was created with <a href="https://python-visualization.github.io/folium/" target="_blank">folium</a>, and used a template called “dark matter” to match the website aesthetic.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

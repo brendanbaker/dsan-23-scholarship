@@ -212,6 +212,8 @@
     margin-top: 0px !important;
     transition: max-height .5s ease;
 }
-      
+    #quarto-appendix.default{
+        background-color: #272838;
+    }
       
   
