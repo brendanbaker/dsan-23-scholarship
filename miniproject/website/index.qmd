@@ -11,9 +11,9 @@ embed-resources: false
 
 ## 🤝 Introduction
 
-The present state of the economy (as of May 2023) is uncertain at best, with some bearish voices warning of recession while others claim it's business as usual.  A recent [Forbes advisor article](https://www.forbes.com/advisor/investing/are-we-in-a-recession/) tracked 15 performance metrics and rated 3 as good, 4 as neutral, and 8 as bad.  Two consumer confidence surveys were listed - one rated good, the other rated bad.  A recent [nerdwallet](https://www.nerdwallet.com/article/finance/are-we-in-a-recession) article dated May 3rd plainly states "According to a traditional definition, the U.S. is not currently in a recession."  
+The present state of the economy (as of May 2023) is uncertain at best, with some bearish voices warning of recession while others claim it's business as usual.  A recent [Forbes advisor article](https://www.forbes.com/advisor/investing/are-we-in-a-recession/) tracked 15 market performance metrics and rated 3 as good, 4 as neutral, and 8 as bad.  Two conflicting consumer confidence surveys were listed - one rated good, the other rated bad.  On the other hand, a recent [nerdwallet](https://www.nerdwallet.com/article/finance/are-we-in-a-recession) article dated May 3rd plainly states that "According to a traditional definition, the U.S. is not currently in a recession."  
 
-While I am not an economist, I am interested in understanding the current state of job market for data scientists, since I will need to find a job after I graduate.  Before breaking out the machine learning algorithms to try and predict where the economy is going (maybe later!), I think using the data provided for our vizualization mini-project might give us a sense of how the data science market looks like right now.  At the very least, I hope to answer a few questions that I've had when trying to navigate job postings.  
+I am not an economist; Rather, I am a data science graduate student at Georgetown University's Data Science and Analytics (DSAN) program.  Since I will need to find a job after I graduate, I'd like to understand the current state of job market for data scientists.  Before breaking out the machine learning algorithms to try and predict where the economy is going (maybe later!), I think using the data provided for our vizualization mini-project might give us a sense of how the data science market looks like right now.  At the very least, I hope to answer a few questions that I've had when trying to navigate job postings.  
 
 The data provided for this mini-project comes from a web-crawling exercise that involved 11 different search terms on April 14th, 2023.  These search terms were:
 
@@ -25,6 +25,7 @@ The data provided for this mini-project comes from a web-crawling exercise that 
  * `reinforcement learning`
  * `deep learning`
  * `time series`
+ * `time series analysis` (combined with time series)
  * `block chain`
  * `natural language processing`
 
@@ -329,6 +330,105 @@ Out of the 823 job postings in our dataset, only 464 of them listed their benefi
 
 ## 🗺️ Mapping Salaries 
 
-Continuing with our theme of transparency, I imagine much consideration goes into whether a salary should be listed on a posting.  According to [LinkedIn](https://www.linkedin.com/business/talent/blog/talent-acquisition/why-you-should-include-salary-ranges-in-job-posts#:~:text=New%20research%20shows%20what%20many,affect%20their%20decision%20to%20apply.), 91% of job seekers said seeing a salary range on a job posting affects their decision to apply for a job.  In our sample, only 133 postings listed a salary range - only about 15%. 
+Continuing with our theme of transparency, I imagine much consideration goes into whether a salary should be listed on a posting.  According to [LinkedIn](https://www.linkedin.com/business/talent/blog/talent-acquisition/why-you-should-include-salary-ranges-in-job-posts#:~:text=New%20research%20shows%20what%20many,affect%20their%20decision%20to%20apply.), 91% of job seekers said seeing a salary range on a job posting affects their decision to apply for a job.  In our sample, only 133 postings listed a salary range - approximately 15% of all jobs. 
 
-All of the remote jobs were placed near Toronto, Canada, ranked as [one of the best places to be a remote worker](https://www.forbes.com/sites/jackkelly/2021/10/07/the-100-best-destinations-for-remote-workers-around-the-world/?sh=5a986bbcffbc). 
+Most of the salaries are listed as a range with a minimum and a maximum.  To visualize the range of salaries, I created a map of the job postings.  There are two overlapping circles for all jobs that posted a salary range - the inner circle is scaled to the minimum salary, and the outer circle is scaled to the maximum salary.  
+
+
+In-person jobs are shown at their listed location, and are displayed by default.  Only the city and state were provided, so the locations reflect the city, but not the actual office address.  A small amount of noise was added to prevent jobs in the same city from overlapping.  Remote jobs were placed in random locations throughout the continential US, and are not shown by default.  Click the "Remote" checkbox on the top right to see those positions. 
+
+```{python}
+#| column: page
+import pandas as pd
+import folium
+from folium import LayerControl
+from colorsys import rgb_to_hls, hls_to_rgb
+from matplotlib.colors import hex2color
+
+
+def marker_size_and_color(salary, time_interval):
+    base_color = "#85bb65"
+    if time_interval == 'a year':
+        size = salary / 5000
+    elif time_interval == 'an hour':
+        annual_salary = salary * 2080
+        size = annual_salary / 5000
+
+    r, g, b = hex2color(base_color)
+    h, l, s = rgb_to_hls(r, g, b)
+    l *= 0.5 + 0.5 * (1 - size / 20)
+    r, g, b = hls_to_rgb(h, l, s)
+    color = f'#{int(r * 255):02x}{int(g * 255):02x}{int(b * 255):02x}'
+
+    opacity = min(1.0, 0.5 + 0.5 * (size / (20*2)))
+    return size, base_color, 0.9
+
+job_postings_df = pd.read_csv("./data/salary_location_clean.csv")
+
+# Create a base map centered on the United States
+map_job = folium.Map(location=[38.407512, -100.321473], zoom_start=4, tiles='CartoDB dark_matter')
+
+# Create layers for in-person and remote jobs
+in_person_layer = folium.FeatureGroup(name="In-person")
+remote_layer = folium.FeatureGroup(name="Remote", show=False)
+
+# Add job postings to the map
+# Add job postings to the map
+for index, posting in job_postings_df.iterrows():
+    # For min_salary
+    size, color, opacity = marker_size_and_color(posting['min_salary'], posting['time_interval'])
+    salary_label = (
+        f"${posting['min_salary']:,} - ${posting['max_salary']:,} a year"
+        if posting['time_interval'] == 'a year'
+        else f"${posting['min_salary'] * 2080:,} - ${posting['max_salary'] * 2080:,} a year (hourly)"
+    )
+    layer = in_person_layer if posting['location'].lower() not in ['anywhere', 'united states'] else remote_layer
+    folium.CircleMarker(
+        location=[posting['latitude'], posting['longitude']],
+        radius=size,
+        color='white',
+        weight = 1,
+        fill=True,
+        fill_color="#305718",
+        fill_opacity=opacity,
+        popup=(
+            f"<strong>{posting['name']}</strong><br>"
+            f"Salary: {salary_label}<br>"
+        ),
+        tooltip=posting['name'],
+    ).add_to(layer)
+
+    # For max_salary
+    size, color, opacity = marker_size_and_color(posting['max_salary'], posting['time_interval'])
+    folium.CircleMarker(
+        location=[posting['latitude'], posting['longitude']],
+        radius=size,
+        color='white',
+        weight = 1,
+        fill=True,
+        fill_color=color,
+        fill_opacity=0.8,
+        popup=(
+            f"<strong>{posting['name']}</strong><br><br>"
+            f"<strong> Job title: </strong>{posting['job_title']}<br><br>"
+            f"<strong> Location: </strong>{posting['location']}<br><br>"
+            f"<strong>Salary:</strong> {salary_label}<br>"
+        ),
+        tooltip=posting['name'],
+    ).add_to(layer)
+    
+map_job.add_child(in_person_layer)
+map_job.add_child(remote_layer)
+
+# Add layer control to the map with the menu open by default
+folium.LayerControl(collapsed=False).add_to(map_job)
+map_job
+```
+<font size='2'><center><br>*A map of the jobs that listed a salary.  The inner circle represents the minimum salary listed, and the outer circle represents the maximum salary listed.  Click on a circle to reveal more information about that job.  Scroll to zoom in on a region and see the individual jobs (try the DC metro area).  Jobs with an hourly wage listed were converted to yearly salary ranges by multiplying the number by the approximate number of hours worked in a year (2,080 for a 40 hour work week).  Remote jobs were randomly placed within the US, and can be toggled using the checkbox in the top right corner.  Locations only reflect the city and state listed in the posting, not actual addresses.*</center></font>
+
+Examining this map, some trends become apparent.  Most of the postions have a fair amount of room for negotiation.  On average, the maximum salary is $35,000 or 61% more than the minimum salary, but there is considerable variance.  See the remote Fintech Recruiters job, with a minimum of $100,000 and a maximum of $500,000.  A prospective applicant's perception of a posting may be impacted by the listed range of a salary.  A fixed salary might seem rigid and convey a sense of strict salary structure, whereas a position with a very broad range may seem confusing or too good to be true. 
+
+We can also see that in-person jobs tend to be similar within a region.  Looking at San Fransciso as an example, we can see that the salaries seem to be within the same approximate range of $100,000 - $250,000.  Whether a salary is similar to other salaries in the region can also contribute to a prospective applicant's decision to apply for the position.  Jobs with salaries much lower than the regional standard may be completely passed over. 
+
+Choosing whether to post a salary is a significant decision for an employer.  In my opinion, I think that listing a salary range is best; this sets expectations for the applicant and promotes fairness in negotiation.  The talent pool available to the employer will also be larger, since more people will want to apply to a job that posts a salary within their desired range.  
+
