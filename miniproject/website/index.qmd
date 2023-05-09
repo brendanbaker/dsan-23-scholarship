@@ -11,11 +11,11 @@ embed-resources: false
 
 ## 🤝 Introduction
 
-The present state of the economy (as of May 2023) is uncertain at best, with some bearish analysts warning of recession while others claim it's business as usual.  A recent [Forbes advisor article](https://www.forbes.com/advisor/investing/are-we-in-a-recession/) tracked 15 market performance metrics and rated 3 as good, 4 as neutral, and 8 as bad.  Two conflicting consumer confidence surveys were listed - one rated good, the other rated bad.  On the other hand, a recent [nerdwallet](https://www.nerdwallet.com/article/finance/are-we-in-a-recession) article dated May 3rd plainly states that "According to a traditional definition, the U.S. is not currently in a recession."  
+The present state of the economy (as of May 2023) is uncertain at best, with some bearish analysts warning of recession while others claim it's business as usual.  A recent <a href="https://www.forbes.com/advisor/investing/are-we-in-a-recession/" target="_blank">Forbes advisor article</a> tracked 15 market performance metrics and rated 3 as good, 4 as neutral, and 8 as bad.  Two conflicting consumer confidence surveys were listed - one rated good, the other rated bad.  On the other hand, a recent <a href="https://www.nerdwallet.com/article/finance/are-we-in-a-recession" target="_blank">nerdwallet</a> article dated May 3rd plainly states that "According to a traditional definition, the U.S. is not currently in a recession."  
 
-I am not an economist; Rather, I am a data science graduate student at Georgetown University's Data Science and Analytics (DSAN) program.  Since I will need to find a job after I graduate, I'd like to understand the current state of job market for data scientists.  Rather than break out the machine learning algorithms to try and predict where the economy is going, I think creating some visualizations using the data provided for our mini-project might give us an intuitive sense of how the data science market looks like right now.  At the very least, I hope to answer a few questions that I've had when trying to navigate job postings.  
+I am not an economist; rather, I am a graduate student at Georgetown University's Data Science and Analytics (DSAN) program.  Since I will need to find a job after I graduate, I'd like to understand the current state of the job market for data scientists.  Rather than break out the machine learning algorithms to try and predict where the economy is going, I think creating some visualizations using the data provided for our mini-project might give us an intuitive sense of how the data science market looks like right now.  At the very least, I hope to answer a few questions that I've had when trying to navigate job postings.  
 
-The data provided for this mini-project comes from a web-crawling exercise that involved 11 different search terms on April 14th, 2023.  These search terms were:
+The data provided for this mini-project comes from a web-crawling exercise that involved searching for jobs using 11 different terms on April 14th, 2023.  These search terms were:
 
  * `data scientist`
  * `data analyst`
@@ -33,7 +33,7 @@ The searches were also divided into two categories based on their location: nati
   
 
 ![An example job posting.](./pics/jobposting.png)
-<font size='2'><center>*Screenshot of an example job posting.  Many postings list abundant qualifications, responsibilities, and benefits.*</center></font>
+<font size='3'><center>*Screenshot of an example job posting.  Many postings list several qualifications, responsibilities, and benefits.*</center></font>
  
 There were a total of 823 unique job postings.  From these postings, there were 458 unique job titles, which leads me to my first question. 
 
@@ -41,21 +41,30 @@ There were a total of 823 unique job postings.  From these postings, there were 
 
 Given the vast number of job titles - and 11 different search categories - I wondered which jobs I might qualify for with my degree.  I've often heard that data science graduates are prepared for a wide variety of jobs, and not to limit oneself only to jobs entitled "Data Scientist".  To this end, I focused on the "Qualifications" and "Responsibilities" sections of a the job posting.  I used a community detection algorithm, combined with some network visualization tools, to determine whether the words used to describe these positions are really as different as their titles might indicate. 
 
+Here is how to interpret the network visualization:
+
+* **Squares** represent search terms that were used to find the job postings.
+* **Circles** represent terms - qualifications (in the first network) or responsibilities (in the second) - that were listed in the job postings.
+* **Lines** connect search terms to the qualifications and responsibilities listed in the job postings.  If there is a line between a circle and a square, that means that the qualification/responsibility (circle) was listed in a job posting discovered with that search term (square).
+* **Colors** represent search terms and qualifications/responsibilities that often appeared together, suggesting that the qualifications or responsibilities are similar within those search terms (squares).  This is called a *community, cluster, or group*.
+* **Click** on a search term (square) to reveal the associated qualifications or responsibilities (circles), and vice versa (click on a qualification to show associated search terms).  For example, clicking on "data scientist" reveals that statistics, regression, machine learning, and a master's degree are commonly listed qualifications.  Click any blank space on the figure to de-select.
+* **Drag** or **zoom** the figure to see the network more clearly.  Refresh the page to reset the network completely.
+  
 ### A network of qualifications ... 
 ```{=html}
 <div class="iframes-container">
     <iframe allowtransparency="true" style="background: #272838;" src="./viz/textnet_qualifications.html" frameborder="0" width="815" height="815" ></iframe>
 </div>
 ```
-<font size='2'><center>*Note that you can click on a shape to highlight its connections, then move and zoom the chart as needed for clarity.  Squares represent search terms, while circles represent noun phrases associated with that search term.*</center></font>
+<font size='3'><center>*A network visualization of qualifications associated with each search term.*</center></font>
 
 Depending on the algorithm I used, I found anywhere between 1 and 3 distinct groups of qualifications amongst the search terms.  In this final iteration, we can see that there are three communities of listed qualifications.  
  
- * **Yellow Group -** *Math and Statistics:*  Primary qualifications explicitly reference math and statistics, as well as regression and R, the statistical programming language.  These are deep learning, time series, and reinforcement learning jobs.  
- * **Red Group -** *High Experience:*  These jobs reference experience, skills, 'a related field', and a master's degree.  These are more specialized machine learning, natural language processing (NLP), and block chain jobs. 
- * **Purple Group -** *Computer Science Heavy:*  References more software-focused programming languages such as C++, Java, and Scala.  These are the big data and neural networks jobs.
+ * **Yellow Group -** *Math and Statistics:*  Primary qualifications explicitly reference math and statistics, as well as regression and R, the statistical programming language.  These are jobs in deep learning, time series, and reinforcement learning.  
+ * **Red Group -** *High Experience:*  These jobs reference terms such as experience, skills, "a related field", and a master's degree.  These are more specialized jobs in machine learning, natural language processing (NLP), and blockchain. 
+ * **Purple Group -** *Computer Science Focused:*  References more software-focused programming languages such as C++, Java, and Scala.  These are jobs in big data and neural networks.
 
-If you click on the nodes (circles/squares) of the network, you can see that even though distinct groups are formed, there is a lot of overlap in the qualifications.  The main qualifications that are not covered in out program are the more software-oriented programming languages such as C++, Java, and Scala. 
+If you click on the nodes (circles/squares) of the network, you can see that even though distinct groups are formed, there is a lot of overlap in the qualifications.  The main qualifications that are not covered in our program are the more software-oriented programming languages such as C++, Java, and Scala. 
 
 ### ... and a network of responsibilities
 ```{=html }
@@ -66,23 +75,30 @@ If you click on the nodes (circles/squares) of the network, you can see that eve
 </div>
 ```
 <br>
-<font size='2'><center>*We can see that the responsibilities listed in the job postings also form 3 similar groups.*</center></font>
+<font size='3'><center>*A network visualization of responsibilities associated with each search term.*</center></font>
 
-Turning out attention to the responsibilities listed in the job postings, we once again are left with three groups using this specific algorithm.
+Turning our attention to the responsibilities listed in the job postings, we once again are left with three groups using this specific algorithm.
 
 My impression of these groups is as follows: 
 
- * **Yellow Group -** *Client-Facing ML:*  Responsiblities include creating Machine Learning (ML) models, with an emphasis on providing value to customers.  These are Deep Learning, Data Science, and Machine Learning jobs.  
- * **Red Group -** *Technical-Managerial:*  Responsiblities that focus on training, management, and providing technical expertise.  These jobs include Big Data and Cloud Computing, Block Chain, and more advanced Reinforcement Learning.  
- * **Purple Group -** *Collaborative Development:*  This group references more 'soft skills' such as collaboration, development, and design.  While these are still very technical positions such as Neural Networks and NLP, it often takes a big team to build these models!
+ * **Yellow Group -** *Client-Facing ML:*  Responsiblities include creating Machine Learning (ML) models, with an emphasis on providing value to customers.  These are deep learning, data science, and machine learning jobs.  
+ * **Red Group -** *Technical-Managerial:*  Responsiblities that focus on training, management, and providing technical expertise.  These jobs include big data and cloud Computing, blockchain, and more advanced reinforcement learning.  
+ * **Purple Group -** *Collaborative Development:*  This group references more 'soft skills' such as collaboration, development, and design.  While these are still very technical positions such as neural networks and NLP, it often takes a big team to build these models!
 
 Overall, there is heavy overlap for the qualifications and responsibilities associated with each search term.  The answer to the question "Are the qualifications and responsibilities for these jobs very different?" is: *probably not.*  Fortunately, it looks like our program prepares us very well for the majority of these positions.
 
-## 🦸‍♂️ Great Responsibilities, Great Benefits?
+## 👑 Do Great Responsibilities Bring Great Benefits?
 
-The language in which a job opportunity is packaged varies greatly from company to company.  Some postings are described extensively, while other simply list a few meagre bullet points.  The extent to which the amount of qualifications, responsibilities, and benefits reflect the true nature of a position is unclear.  However, as a prospective applicant, my intuition would be that a job with more listed qualifications and responsibilities should also have more benefits.  At the very least, one would expect companies that are more verbose in their recruitment would have more bullet points in each category: qualifications, responsibilities, and benefits.
+The language in which a job opportunity is packaged varies greatly from company to company.  Some postings are described extensively, while other simply list a few meager bullet points.  The extent to which the amount of qualifications, responsibilities, and benefits reflect the true nature of a position is unclear.  However, as a prospective applicant, my intuition would be that a job with more listed qualifications and responsibilities should also have more benefits.  At the very least, one would expect companies that are more verbose in their recruitment would have more bullet points in each category: qualifications, responsibilities, and benefits.
 
-To answer this question, I tallied the number of bullet points in each category for all of the positions that listed values for all three:
+To answer this question, I tallied the number of bullet points in each category for all of the positions that listed values for all three and created the following visualization.  Here's how to interpret this plot:
+
+* **Size** of the bubble represents the number of listed benefits.
+* **The horizontal position, or x axis** reflects the number of qualifications listed on the job posting.
+* **The vertical position, or y axis** marks the number of listed responsibilities.
+* **Color** indicates which search term yielded that job posting.
+* **Click** on the dropdown menu on the top left to filter by the search term.
+* **Hover** your mouse over a bubble to reveal more information about the job represented by the bubble! 
 
 ```{python}
 #| column: screen
@@ -203,9 +219,15 @@ fig.update_layout(xaxis=dict(showgrid=False))
 fig.update_layout(yaxis=dict(showgrid=False))
 fig.show()
 ```
-<font size='2'><center>*In this plot, the size of the bubble is scaled to the number of listed responsibilities.  The position on the bottom (x) axis reflects the number of qualifications listed on the job posting, while the position on the left (y) axis marks the number of listed responsibilities.  Use the dropdown menu on the top left to filter by the type of job, and mouse over a bubble to reveal more information about that position!*</center></font>
+<font size='3'><center>*A bubble plot representing the relationship between the number of qualifications, responsibilities, and benefits listed in a job posting.*</center></font>
 
 In many cases, there doesn't appear to be much of a relationship between the number of listed responsibilities, qualifications, and benefits.  I admit that this is not the most rigorous way to analyze whether what employers desire in candidates is commensurate with the benefits offered.  However, a disconnect between these three categories may pose a perceptual problem for employers who are trying to attract talent.  For example, a prospective applicant might look at a job posting with 40 listed responsibilities and only 2 benefits - as one company did - and immediately decide not to apply to that position. 
+
+In the **correlation matrix** below:
+
+* **Labels** on the left and bottom indicate the variable being measured.
+* **Color** of the square indicates the strength of the relationship.  Lighter, yellow colors indicate a stronger positive relationship, while darker, purple colors indicate a stronger negative relationship. 
+* **Numbers** in the squares represent the correlation between the two variables.  Values closer to 1 indicate a stronger positive relationship, while values closer to -1 indicate a stronger negative relationship.  Values close to zero indicate no relationship.  The 1s in the diagonal represent the correlation of a variable with itself, which is always 1.
 
 ```{python}
 # Load the data
@@ -320,8 +342,7 @@ fig.update_layout(xaxis=dict(showgrid=False))
 fig.update_layout(yaxis=dict(showgrid=False))
 fig.show()
 ```
-<font size='2'><center>*A correlation matrix between the number of qualifications, responsibilities, and benefits.*</center></font>
-
+<font size='3'><center>*A correlation matrix between the number of qualifications, responsibilities, and benefits.*</center></font>
 
 Looking at the correlations between the three variables, we can see that the relationship differs by the job type.  NLP jobs stand out with a solid 0.47 correlation between the number of listed benefits and qualifications.  All other correlations are around the 0 to 0.3 range, except for time series which is misleading due to its sample size of 2.  
 
@@ -329,13 +350,20 @@ Out of the 823 job postings in our dataset, only 464 of them listed their benefi
 
 ## 🗺️ Mapping Salaries 
 
-Continuing with our theme of transparency, I imagine much consideration goes into whether a salary should be listed on a posting.  According to [LinkedIn](https://www.linkedin.com/business/talent/blog/talent-acquisition/why-you-should-include-salary-ranges-in-job-posts#:~:text=New%20research%20shows%20what%20many,affect%20their%20decision%20to%20apply.), 91% of job seekers said seeing a salary range on a job posting affects their decision to apply for a job.  In our sample, only 133 postings listed a salary range - approximately 15% of all jobs. 
+Continuing with our theme of transparency, I imagine much consideration goes into whether a salary should be listed on a posting.  According to <a href="https://www.linkedin.com/business/talent/blog/talent-acquisition/why-you-should-include-salary-ranges-in-job-posts#:~:text=New%20research%20shows%20what%20many,affect%20their%20decision%20to%20apply." target="_blank">LinkedIn</a>, 91% of job seekers said seeing a salary range on a job posting affects their decision to apply for a job.  In our sample, only 133 postings listed a salary range - approximately 15% of all jobs in the dataset. 
 
-Most of the salaries are listed as a range with a minimum and a maximum.  To visualize the range of salaries, I created a map of the job postings.  There are two overlapping circles for all jobs that posted a salary range - the inner circle is scaled to the minimum salary, and the outer circle is scaled to the maximum salary.  
+Most of the salaries are listed as a range with a minimum and a maximum.  To visualize the range of salaries, I created a map of the job postings. 
 
+In the map below:
 
-In-person jobs are shown at their listed location, and are displayed by default.  Only the city and state were provided, so the locations reflect the city, but not the actual office address.  A small amount of noise was added to prevent jobs in the same city from overlapping.  Remote jobs were placed in random locations throughout the continental US, and are not shown by default.  Click the "Remote" checkbox on the top right to see those positions. 
+* **Circles** represent the salary of the position.  The inner circle is scaled to the minimum salary, while the outer circle is scaled to the outer salary.
+* **Click** on a circle to reveal more information about a job.  
+* **Scroll** to zoom in on a region and see the individual jobs (try the DC metro area!).
+* **Filter** the map and make the remote jobs visible by clicking the checkbox in the top right corner.  Keep in mind that remote jobs are listed at random locations within the continental USA.
+* **Note** that some jobs were hourly, and were converted to yearly salaries by multiplying the hourly wage by 2,080 (the approximate number of hours worked in a year).  These are noted in the individual information box that pops up when you click on the circle.
+* **Further note** that locations only reflect the city and state listed in the posting, not actual addresses since they were not provided.
 
+### Room for Negotiation: A Map of Salary Ranges
 ```{python}
 #| column: page
 import pandas as pd
@@ -423,23 +451,23 @@ map_job.add_child(remote_layer)
 folium.LayerControl(collapsed=False).add_to(map_job)
 map_job
 ```
-<font size='2'><center><br>*A map of the jobs that listed a salary.  The inner circle represents the minimum salary listed, and the outer circle represents the maximum salary listed.  Click on a circle to reveal more information about that job.  Scroll to zoom in on a region and see the individual jobs (try the DC metro area!).  Jobs with an hourly wage listed were converted to yearly salary ranges by multiplying the wage by the approximate number of hours worked in a year (2,080 for a 40 hour work week).  Remote jobs were randomly placed within the US, and can be toggled using the checkbox in the top right corner.  Locations only reflect the city and state listed in the posting, not actual addresses.*</center></font>
+<font size='3'><center><br>*A map of the jobs that listed a salary.*</center></font>
 
-Examining this map, some trends become apparent.  Most of the positions have a fair amount of room for negotiation.  On average, the maximum salary is $35,000 or 61% more than the minimum salary, but there is considerable variance.  See the remote Fintech Recruiters job, with a minimum of $100,000 and a maximum of $500,000.  A prospective applicant's perception of a posting may be impacted by the listed range of a salary.  A fixed salary might seem rigid and convey a sense of strict salary structure, whereas a position with a very broad range may seem confusing or too good to be true. 
+Examining this map, some trends become apparent.  Most of the positions have a fair amount of room for negotiation.  On average, the maximum salary is $35,000 or 61% more than the minimum salary, but there is considerable variance.  For example, try to find the remote Fintech Recruiters job, with a minimum of $100,000 and a maximum of $500,000.  A prospective applicant's perception of a posting may be impacted by the listed range of a salary.  A fixed salary might seem rigid and convey a sense of strict salary structure, whereas a position with a very broad range may seem confusing or too good to be true. 
 
 We can also see that in-person jobs tend to be similar within a region.  Looking at San Francisco as an example, we can see that the salaries seem to be within the same approximate range of $100,000 - $250,000.  Whether a salary is similar to other salaries in the region can also contribute to a prospective applicant's decision to apply for the position.  Jobs with salaries much lower than the regional standard may be completely passed over. 
 
-Choosing whether to post a salary is a significant decision for an employer.  In my opinion, I think that listing a salary range is best; this sets expectations for the applicant and promotes fairness in negotiation.  The talent pool available to the employer will also be larger, since more people will want to apply to a job that posts a salary within their desired range.  
+Choosing whether to post a salary is a significant decision for an employer.  I believe that listing a salary range is best; this sets expectations for the applicant and promotes fairness in negotiation.  The talent pool available to the employer will also be larger, since more people will want to apply to a job that posts a salary within their desired range.  
 
 ## 🔎 Conclusions
 
 Let's summarize the key insights from this mini-project:
 
 1. <b>Data science jobs are often called something other than "Data Scientist."</b>  Only 21 of the positions in our dataset actually had "Data Scientist" in the job title.  Despite using 11 different search terms, the qualifications and responsibilities for these categories heavily overlapped in our network analysis.  Data science graduates should not hesitate to apply to positions that do not explicitly mention data science for fear of being unqualified. 
-2. <b>Employers should be mindful of the types of information they provide for a job posting.</b> There was not a strong relationship between the amount of responsibilities/qualifications listed and the amount of benefits listed.  While I simply counted the number of bullet points, and those are likely not a good proxy for the true nature of the job, it may impact a job seeker's perception.  If tens of responsibilities are listed but few benefits, it may look like the job asks for more than it provides, and reduce interest in the job. 
-3. <b>Listing a salary range on a job posting is an impactful decision.</b>  Job seekers can easily compare salaries to similar jobs in their area.  If the salaries are significantly less than comparable positions, this will discourage applicants.  Posting a salary range can convey a sense of flexibility and willingness to compensate based on individual factors.  If the range is small, it could suggest a fixed salary structure that may be undesirable.  Huge salary ranges may make the posting more confusing (maybe the company is hiring at different levels) - or worse, it could make the job posting seem like it is fake.  On average, a maximum salary that is 25-75% more than the minimum will seem reasonable. 
+2. <b>Employers should be mindful of the types of information they provide for a job posting.</b> There was not a strong relationship between the quantity of responsibilities/qualifications listed and the quantity of benefits listed.  While I simply counted the number of bullet points, and those may not be a good proxy for the true value of the benefits, they may impact a job seeker's perception.  If tens of responsibilities are listed but few benefits, it may look like the job asks for more than it provides, and reduce interest in the job. 
+3. <b>Listing a salary range on a job posting is an impactful decision.</b>  Job seekers can easily compare salaries to similar jobs in their area.  If the salaries are significantly less than comparable positions, this will discourage applicants.  Posting a salary range can convey a sense of flexibility and willingness to compensate based on individual factors.  If the range is small, it could suggest a fixed salary structure that may be undesirable.  Huge salary ranges may make the posting more confusing (maybe the company is hiring at different levels) - or worse, it could make the job posting seem like it is fake.  On average, a maximum salary that is about 60% more than the minimum will seem reasonable. 
 
-In building this project, I've learned a lot about the types of jobs available to a data science graduate like myself.  I feel more confident in applying to jobs with unfamiliar titles.  Finally, I feel more confident in knowing what to look for in a posting's qualifications, responsibilities, benefits, and salary.  Thanks for reading! 
+In building this project, I've learned a great deal about the types of jobs available to a data science graduate student like myself.  I feel more confident in applying to jobs with unfamiliar titles.  Finally, I am better equipped to know what to look for in a posting's qualifications, responsibilities, benefits, and salary.  Thanks for reading! 
 
 ## 📊 Methodology
 
