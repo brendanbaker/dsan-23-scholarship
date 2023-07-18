@@ -13,7 +13,8 @@ cite-method: natbib
 
 <a href="index.html">Take me back to the report!</a>
 
-On this page, I briefly summarize some of the techniques used to generate the visualizations in the report.  All code will be linked on my github after the project is de-anonymized.
+On this page, I briefly summarize some of the techniques used to generate the visualizations in the report.
+
 
 ## Network Analysis
 

@@ -1,5 +1,6 @@
 ---
-title: "What does the job market for data science graduates *look* like?"
+title: "Visualizing the Data Science Job Market"
+author: "Brendan Baker"
 toc: true
 toc-title: "Skip to..."
 toc-depth: 2
@@ -13,7 +14,7 @@ embed-resources: false
 
 The present state of the economy (as of May 2023) is uncertain at best, with some bearish analysts warning of recession while others claim it's business as usual.  A recent <a href="https://www.forbes.com/advisor/investing/are-we-in-a-recession/" target="_blank">Forbes advisor article</a> tracked 15 market performance metrics and rated 3 as good, 4 as neutral, and 8 as bad.  Two conflicting consumer confidence surveys were listed - one rated good, the other rated bad.  On the other hand, a recent <a href="https://www.nerdwallet.com/article/finance/are-we-in-a-recession" target="_blank">nerdwallet</a> article dated May 3rd plainly states that "According to a traditional definition, the U.S. is not currently in a recession."  
 
-I am not an economist; rather, I am a graduate student at Georgetown University's Data Science and Analytics (DSAN) program.  Since I will need to find a job after I graduate, I'd like to understand the current state of the job market for data scientists.  Rather than break out the machine learning algorithms to try and predict where the economy is going, I think creating some visualizations using the data provided for our mini-project might give us an intuitive sense of how the data science market looks like right now.  At the very least, I hope to answer a few questions that I've had when trying to navigate job postings.  
+I am not an economist; rather, I am a graduate student at Georgetown University's Data Science and Analytics (DSAN) program.  Since I will need to find a job after I graduate, I'd like to understand the current state of the job market for data scientists.  I think creating some visualizations using the data provided for our scholarship project might give us an intuitive sense of how the data science market looks right now.  At the very least, I hope to answer a few questions that I've had when trying to navigate job postings.  
 
 The data provided for this mini-project comes from a web-crawling exercise that involved searching for jobs using 11 different terms on April 14th, 2023.  These search terms were:
 
@@ -472,3 +473,7 @@ In building this project, I've learned a great deal about the types of jobs avai
 ## 📊 Methodology
 
 <a href="methods.html">Click here</a> to see the methodology used in this project.
+
+## 🖥️ Code
+
+<a href="code.html">Click here</a> to see the code used in this project.
